@@ -2,18 +2,33 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const dotenv = require('dotenv');
-
 const dns = require('dns');
 
-// Fix for ECONNREFUSED issues with MongoDB Atlas SRV records on some DNS providers
 dns.setServers(['8.8.8.8', '8.8.4.4']);
 
 dotenv.config();
 
 const app = express();
+
+// ✅ CORS CONFIGURATION
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "http://localhost:3000",
+      "https://agrinexus-frontend.onrender.com",
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+  })
+);
+
+// Handle preflight globally
+app.options("*", cors());
+
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ limit: '10mb', extended: true }));
-app.use(cors());
 
 const PORT = process.env.PORT || 5000;
 
@@ -34,9 +49,9 @@ const orderRoutes = require('./routes/orders');
 const favoriteRoutes = require('./routes/favorites');
 const reviewRoutes = require('./routes/reviews');
 const forumRoutes = require('./routes/forums');
-const aiRoutes = require('./routes/ai'); // Import AI routes
-const energyRoutes = require('./routes/energy'); // Energy logic
-const communityRoutes = require('./routes/communities'); // Community Chat
+const aiRoutes = require('./routes/ai');
+const energyRoutes = require('./routes/energy');
+const communityRoutes = require('./routes/communities');
 
 app.use('/api/auth', authRoutes);
 app.use('/api/crops', cropRoutes);
@@ -45,9 +60,9 @@ app.use('/api/orders', orderRoutes);
 app.use('/api/favorites', favoriteRoutes);
 app.use('/api/reviews', reviewRoutes);
 app.use('/api/forum', forumRoutes);
-app.use('/api/ai', aiRoutes); // Mount AI routes
-app.use('/api/energy', energyRoutes); // Mount Energy Planner routes
-app.use('/api/communities', communityRoutes); // Mount Community routes
+app.use('/api/ai', aiRoutes);
+app.use('/api/energy', energyRoutes);
+app.use('/api/communities', communityRoutes);
 
 app.get('/', (req, res) => {
     res.send('Farmer Platform API is running');
