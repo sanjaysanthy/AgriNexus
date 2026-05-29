@@ -34,7 +34,7 @@ const Header = ({ onMenuClick }) => {
         setNotifLoading(true);
         try {
             const res = await fetch(
-                `http://localhost:5000/api/notifications/${userId}?portal=${portalMode}`
+                `${import.meta.env.VITE_API_URL}/notifications/${userId}?portal=${portalMode}`
             );
             if (res.ok) {
                 const data = await res.json();
@@ -76,7 +76,7 @@ const Header = ({ onMenuClick }) => {
         if (!userId) return;
         try {
             await fetch(
-                `http://localhost:5000/api/notifications/read-all/${userId}?portal=${portalMode}`,
+                `${import.meta.env.VITE_API_URL}/notifications/read-all/${userId}?portal=${portalMode}`,
                 { method: 'PATCH' }
             );
             setNotifications(prev => prev.map(n => ({ ...n, read: true })));
@@ -88,7 +88,7 @@ const Header = ({ onMenuClick }) => {
     const deleteNotification = async (e, id) => {
         e.stopPropagation();
         try {
-            await fetch(`http://localhost:5000/api/notifications/${id}`, { method: 'DELETE' });
+            await fetch(`${import.meta.env.VITE_API_URL}/notifications/${id}`, { method: 'DELETE' });
             setNotifications(prev => prev.filter(n => n._id !== id));
         } catch (err) {
             console.error('Delete notification failed:', err);

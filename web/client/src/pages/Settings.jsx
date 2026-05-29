@@ -23,7 +23,7 @@ const Settings = () => {
         setIsSaving(true);
         try {
             const userId = localStorage.getItem('userId');
-            const res = await fetch(`http://localhost:5000/api/auth/profile/${userId}`, {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/auth/profile/${userId}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(editData)

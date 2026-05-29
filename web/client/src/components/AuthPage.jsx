@@ -45,7 +45,7 @@ const AuthPage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const url = isLogin ? 'http://localhost:5000/api/auth/login' : 'http://localhost:5000/api/auth/signup';
+            const url = isLogin ? '${import.meta.env.VITE_API_URL}/auth/login' : '${import.meta.env.VITE_API_URL}/auth/signup';
             const res = await axios.post(url, formData);
             setMessage(isLogin ? `Welcome back, ${res.data.user.name}!` : 'Signup successful! Please login.');
             if (isLogin) {

@@ -42,9 +42,9 @@ const Dashboard = () => {
                 const userId = localStorage.getItem('userId');
                 if (!userId || userId === 'null') return;
                 const [cropRes, orderRes, demandRes] = await Promise.all([
-                    fetch(`http://localhost:5000/api/crops/${userId}`),
-                    fetch(`http://localhost:5000/api/orders/farmer/${userId}`),
-                    fetch(`http://localhost:5000/api/orders/demand/regional`)
+                    fetch(`${import.meta.env.VITE_API_URL}/crops/${userId}`),
+                    fetch(`${import.meta.env.VITE_API_URL}/orders/farmer/${userId}`),
+                    fetch(`${import.meta.env.VITE_API_URL}/orders/demand/regional`)
                 ]);
                 const cropsData = await cropRes.json();
                 const ordersData = await orderRes.json();

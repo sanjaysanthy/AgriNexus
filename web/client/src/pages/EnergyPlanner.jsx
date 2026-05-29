@@ -38,7 +38,7 @@ const EnergyPlanner = () => {
         e.preventDefault();
         setLoading(true);
         try {
-            const res = await fetch('http://localhost:5000/api/energy/plan', {
+            const res = await fetch('${import.meta.env.VITE_API_URL}/energy/plan', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData)

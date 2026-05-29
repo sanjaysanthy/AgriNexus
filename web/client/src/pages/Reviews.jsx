@@ -9,7 +9,7 @@ const Reviews = () => {
     useEffect(() => {
         const fetchReviews = async () => {
             try {
-                const response = await fetch('http://localhost:5000/api/reviews/all');
+                const response = await fetch('${import.meta.env.VITE_API_URL}/reviews/all');
                 const data = await response.json();
                 setReviews(Array.isArray(data) ? data : []);
             } catch (err) {

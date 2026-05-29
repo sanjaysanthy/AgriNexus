@@ -171,7 +171,7 @@ const Seasonal = () => {
 
     const fetchMarketDemand = useCallback(async (loc = '') => {
         try {
-            const url = `http://localhost:5000/api/orders/demand/regional${loc ? `?location=${encodeURIComponent(loc)}` : ''}`;
+            const url = `${import.meta.env.VITE_API_URL}/orders/demand/regional${loc ? `?location=${encodeURIComponent(loc)}` : ''}`;
             const res = await fetch(url);
             const data = await res.json();
             setMarketDemand(data);
@@ -274,7 +274,7 @@ const Seasonal = () => {
     const handleGetAIAnalysis = async (crop) => {
         setAnalyzingCrop(crop.name);
         try {
-            const res = await fetch('http://localhost:5000/api/ai/analyze-crop', {
+            const res = await fetch('${import.meta.env.VITE_API_URL}/ai/analyze-crop', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({

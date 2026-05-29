@@ -22,7 +22,7 @@ const FarmerOrders = () => {
     useEffect(() => {
         const fetchOrders = async () => {
             try {
-                const res = await fetch(`http://localhost:5000/api/orders/farmer/${farmerId}`);
+                const res = await fetch(`${import.meta.env.VITE_API_URL}/orders/farmer/${farmerId}`);
                 const data = await res.json();
                 setOrders(Array.isArray(data) ? data : []);
             } catch (err) {
@@ -36,7 +36,7 @@ const FarmerOrders = () => {
 
     const updateStatus = async (orderId, newStatus) => {
         try {
-            const res = await fetch(`http://localhost:5000/api/orders/${orderId}/status`, {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/orders/${orderId}/status`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ status: newStatus }),

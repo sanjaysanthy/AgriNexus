@@ -10,7 +10,7 @@ const FavoriteFarms = () => {
     useEffect(() => {
         const fetchFavorites = async () => {
             try {
-                const response = await fetch(`http://localhost:5000/api/favorites/${userId}`);
+                const response = await fetch(`${import.meta.env.VITE_API_URL}/favorites/${userId}`);
                 const data = await response.json();
                 setFavorites(Array.isArray(data) ? data : []);
             } catch (err) {

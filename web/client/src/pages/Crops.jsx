@@ -59,7 +59,7 @@ const Crops = () => {
         try {
             const userId = localStorage.getItem('userId');
             if (userId) {
-                const res = await axios.get(`http://localhost:5000/api/crops/${userId}`);
+                const res = await axios.get(`${import.meta.env.VITE_API_URL}/crops/${userId}`);
                 setCrops(res.data);
             }
         } catch (err) {
@@ -75,10 +75,10 @@ const Crops = () => {
             const userId = localStorage.getItem('userId');
             if (editingId) {
                 // UPDATE
-                await axios.put(`http://localhost:5000/api/crops/${editingId}`, newCrop);
+                await axios.put(`${import.meta.env.VITE_API_URL}/crops/${editingId}`, newCrop);
             } else {
                 // CREATE
-                await axios.post('http://localhost:5000/api/crops/add', {
+                await axios.post('${import.meta.env.VITE_API_URL}/crops/add', {
                     ...newCrop,
                     userId,
                     icon: 'sprout'
@@ -95,7 +95,7 @@ const Crops = () => {
     const handleDelete = async (id) => {
         if (!window.confirm("Are you sure you want to delete this crop?")) return;
         try {
-            await axios.delete(`http://localhost:5000/api/crops/${id}`);
+            await axios.delete(`${import.meta.env.VITE_API_URL}/crops/${id}`);
             fetchCrops();
         } catch (err) {
             console.error("Error deleting crop:", err);

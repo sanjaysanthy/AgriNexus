@@ -25,8 +25,8 @@ const MyListings = () => {
         const fetchData = async () => {
             try {
                 const [cropRes, orderRes] = await Promise.all([
-                    fetch(`http://localhost:5000/api/crops/${userId}`),
-                    fetch(`http://localhost:5000/api/orders/farmer/${userId}`)
+                    fetch(`${import.meta.env.VITE_API_URL}/crops/${userId}`),
+                    fetch(`${import.meta.env.VITE_API_URL}/orders/farmer/${userId}`)
                 ]);
                 const crops = await cropRes.json();
                 const ordersData = await orderRes.json();
@@ -44,7 +44,7 @@ const MyListings = () => {
     const handleStatusChange = async (cropId, newStatus) => {
         setUpdatingId(cropId);
         try {
-            const res = await fetch(`http://localhost:5000/api/crops/${cropId}`, {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/crops/${cropId}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ status: newStatus }),

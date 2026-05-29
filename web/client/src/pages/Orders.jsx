@@ -22,7 +22,7 @@ const MyOrders = () => {
     useEffect(() => {
         const fetchOrders = async () => {
             try {
-                const response = await fetch(`http://localhost:5000/api/orders/customer/${userId}`);
+                const response = await fetch(`${import.meta.env.VITE_API_URL}/orders/customer/${userId}`);
                 const data = await response.json();
                 setOrders(Array.isArray(data) ? data : []);
             } catch (err) {
@@ -37,7 +37,7 @@ const MyOrders = () => {
     const handleReviewSubmit = async (e) => {
         e.preventDefault();
         try {
-            const res = await fetch('http://localhost:5000/api/reviews/add', {
+            const res = await fetch('${import.meta.env.VITE_API_URL}/reviews/add', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({

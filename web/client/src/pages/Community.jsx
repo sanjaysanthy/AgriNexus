@@ -77,15 +77,15 @@ const Community = () => {
         setLoading(true);
         try {
             if (activeTab === 'Communities' || activeTab === 'Discover') {
-                const res = await fetch(`http://localhost:5000/api/communities/broadcast/all`);
+                const res = await fetch(`${import.meta.env.VITE_API_URL}/communities/broadcast/all`);
                 const all = await res.json();
                 setAllBroadcastHubs(all);
                 
-                const myRes = await fetch(`http://localhost:5000/api/communities/joined/${userId}`);
+                const myRes = await fetch(`${import.meta.env.VITE_API_URL}/communities/joined/${userId}`);
                 const myData = await myRes.json();
                 setCommunities(myData);
             } else {
-                const res = await fetch(`http://localhost:5000/api/communities/my/${userId}`);
+                const res = await fetch(`${import.meta.env.VITE_API_URL}/communities/my/${userId}`);
                 const data = await res.json();
                 setCommunities(data);
             }
@@ -99,7 +99,7 @@ const Community = () => {
     const fetchMessages = async (hubId) => {
         try {
             const endpoint = (activeTab === 'Communities' || selectedHub?.type === 'broadcast') ? 'announcements' : 'messages';
-            const res = await fetch(`http://localhost:5000/api/communities/${hubId}/${endpoint}`);
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/communities/${hubId}/${endpoint}`);
             if (res.ok) {
                 const data = await res.json();
                 setMessages(data);
@@ -194,7 +194,7 @@ const Community = () => {
                 text: newMessage 
             });
 
-            const res = await fetch(`http://localhost:5000/api/communities/${selectedHub._id}/${endpoint}`, {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/communities/${selectedHub._id}/${endpoint}`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -225,7 +225,7 @@ const Community = () => {
 
     const handleReact = async (msgId, emoji) => {
         try {
-            const res = await fetch(`http://localhost:5000/api/communities/${msgId}/react`, {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/communities/${msgId}/react`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ userId, emoji })
@@ -241,7 +241,7 @@ const Community = () => {
         if (!window.confirm('Are you sure you want to delete this community? All messages will be permanently removed.')) return;
 
         try {
-            const res = await fetch(`http://localhost:5000/api/communities/${hubId}?userId=${userId}`, {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/communities/${hubId}?userId=${userId}`, {
                 method: 'DELETE'
             });
 
@@ -267,7 +267,7 @@ const Community = () => {
             return;
         }
         try {
-            const res = await fetch(`http://localhost:5000/api/communities/users/search?q=${q}&currentUserId=${userId}`);
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/communities/users/search?q=${q}&currentUserId=${userId}`);
             const data = await res.json();
             setUserSearchResults(data);
         } catch (err) {
@@ -277,7 +277,7 @@ const Community = () => {
 
     const startDirectChat = async (target) => {
         try {
-            const res = await fetch(`http://localhost:5000/api/communities/direct`, {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/communities/direct`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -299,7 +299,7 @@ const Community = () => {
 
     const joinBroadcast = async (hubId) => {
         try {
-            const res = await fetch(`http://localhost:5000/api/communities/${hubId}/join`, {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/communities/${hubId}/join`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ userId })
@@ -323,7 +323,7 @@ const Community = () => {
         }
         
         try {
-            const res = await fetch(`http://localhost:5000/api/communities/search-by-id/${communityIdSearch.trim()}`);
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/communities/search-by-id/${communityIdSearch.trim()}`);
             if (res.ok) {
                 const community = await res.json();
                 setSearchedCommunity(community);
@@ -959,7 +959,7 @@ const Community = () => {
                                         const form = e.target;
                                         
                                         try {
-                                            const res = await fetch(`http://localhost:5000/api/communities/create`, {
+                                            const res = await fetch(`${import.meta.env.VITE_API_URL}/communities/create`, {
                                                 method: 'POST',
                                                 headers: { 'Content-Type': 'application/json' },
                                                 body: JSON.stringify({

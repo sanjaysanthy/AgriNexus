@@ -50,7 +50,7 @@ const FarmerForum = () => {
 
     const fetchUserInfo = async () => {
         try {
-            const res = await fetch(`http://localhost:5000/api/auth/user/${userId}`);
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/auth/user/${userId}`);
             const data = await res.json();
             setCurrentUserInfo(data);
         } catch (err) {
@@ -61,7 +61,7 @@ const FarmerForum = () => {
     const handleHoverStart = async (targetId) => {
         setHoveredUser(targetId);
         try {
-            const res = await fetch(`http://localhost:5000/api/auth/user/${targetId}`);
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/auth/user/${targetId}`);
             const data = await res.json();
             setHoveredData(data);
         } catch (err) {
@@ -78,8 +78,8 @@ const FarmerForum = () => {
         setLoading(true);
         try {
             const endpoint = viewMode === 'Following' 
-                ? `http://localhost:5000/api/forum/feed/${userId}` 
-                : 'http://localhost:5000/api/forum/all';
+                ? `${import.meta.env.VITE_API_URL}/forum/feed/${userId}` 
+                : '${import.meta.env.VITE_API_URL}/forum/all';
             const res = await fetch(endpoint);
             const data = await res.json();
             setPosts(Array.isArray(data) ? data : []);
@@ -119,7 +119,7 @@ const FarmerForum = () => {
                 title: newPost.title || newPost.cropName || 'New Produce Listing'
             };
 
-            const res = await fetch('http://localhost:5000/api/forum/add', {
+            const res = await fetch('${import.meta.env.VITE_API_URL}/forum/add', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(postToSave),
@@ -139,7 +139,7 @@ const FarmerForum = () => {
 
     const handleLike = async (postId) => {
         try {
-            const res = await fetch(`http://localhost:5000/api/forum/${postId}/like`, {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/forum/${postId}/like`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ userId }),
@@ -151,7 +151,7 @@ const FarmerForum = () => {
     const handleDeletePost = async (postId) => {
         if (!window.confirm("Are you sure you want to delete this post?")) return;
         try {
-            const res = await fetch(`http://localhost:5000/api/forum/${postId}`, {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/forum/${postId}`, {
                 method: 'DELETE',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ userId }),
@@ -172,7 +172,7 @@ const FarmerForum = () => {
         if (!searchQuery.trim()) return;
         setSearching(true);
         try {
-            const res = await fetch(`http://localhost:5000/api/auth/search?q=${searchQuery}`);
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/auth/search?q=${searchQuery}`);
             const data = await res.json();
             setSearchResults(data.filter(u => u._id !== userId)); // exclude self
         } catch (err) { }
@@ -181,7 +181,7 @@ const FarmerForum = () => {
 
     const handleFollow = async (targetId) => {
         try {
-            const res = await fetch(`http://localhost:5000/api/auth/${targetId}/follow`, {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/auth/${targetId}/follow`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ currentUserId: userId }),

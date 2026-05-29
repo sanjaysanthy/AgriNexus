@@ -39,8 +39,8 @@ const CustomerDashboard = () => {
             try {
                 const id = selectedCrop.userId;
                 const [userRes, cropsRes] = await Promise.all([
-                    fetch(`http://localhost:5000/api/auth/user/${id}`),
-                    fetch(`http://localhost:5000/api/crops/${id}`)
+                    fetch(`${import.meta.env.VITE_API_URL}/auth/user/${id}`),
+                    fetch(`${import.meta.env.VITE_API_URL}/crops/${id}`)
                 ]);
                 const userData = await userRes.json();
                 const cropData = await cropsRes.json();
@@ -58,7 +58,7 @@ const CustomerDashboard = () => {
     React.useEffect(() => {
         const fetchReadyCrops = async () => {
             try {
-                const response = await fetch('http://localhost:5000/api/crops/ready');
+                const response = await fetch('${import.meta.env.VITE_API_URL}/crops/ready');
                 const data = await response.json();
                 
                 // Add some pseudo-randomized local positions so they appear on the map for demo
@@ -158,7 +158,7 @@ const CustomerDashboard = () => {
                 totalPrice: totalPrice,
                 address: orderForm.address,
             };
-            const res = await fetch('http://localhost:5000/api/orders/place', {
+            const res = await fetch('${import.meta.env.VITE_API_URL}/orders/place', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload),
